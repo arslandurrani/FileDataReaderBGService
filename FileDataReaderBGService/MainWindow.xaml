@@ -1,0 +1,102 @@
+﻿<Window x:Class="FileDataReaderBGService.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FileDataReaderBGService"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Label FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"
+                Grid.Row="0" Content="Application for Reading file data using background service and inserted into the SQLite DB using EF"/>
+
+        <TabControl x:Name="ControlTab" Grid.Row="2">
+            <TabItem Header="Background Service Control">
+
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap" Margin="10">
+                        <Bold> Step to run the application </Bold> <LineBreak/> <LineBreak/>
+                        1. Run the service by clicking on the start service button <LineBreak/>
+                        2. In the project Directory, Place the sample data files from the <Bold> DATA_FILES </Bold> folder to <Bold> IN_PROCESS </Bold> folder <LineBreak/>
+                        3. The service will pick the <Bold> very first .txt </Bold> file from the <Bold> DATA_FILES/IN_PROCESS </Bold> folder and wait for 5 second to start the process again <LineBreak/>
+                        4. The process files will be moved to <Bold> DATA_FILES/COMPLETED </Bold> <LineBreak/>
+                        4. You will be shown pop up if any data is loaded from the file and inserted into the <Bold> ELDEvents </Bold> table <LineBreak/>
+                        5. you can switch tab if you want to see if any data is loaded in the table or not <LineBreak/>
+                        6. To stop the service click close the application <LineBreak/>                           
+                    </TextBlock>
+
+                    <TextBlock x:Name="ServiceStatus" FontWeight="Bold" Text="Service Status"/>
+
+                    <Button Content="Start Service" Click="StartService" Width="250" Height="50" Margin="5" />
+
+                </StackPanel>
+
+            </TabItem>
+
+            <TabItem x:Name="ELDEventsTab" Header="ELD Events Data">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock FontWeight="Bold" Text="{Binding ElementName=ELDEventsDG, Path=ItemsSource.Count, StringFormat='Total Records: {0}'}"
+                        Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"/>
+
+                    <DataGrid x:Name="ELDEventsDG" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                        Grid.Row="1" ColumnWidth="*"  IsSynchronizedWithCurrentItem="True" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Databse Id" Binding="{Binding Id}" />
+                            <DataGridTextColumn Header="Enginestate" Binding="{Binding Enginestate}" />
+                            <DataGridTextColumn Header="VIN" Binding="{Binding VIN}" />
+                            <DataGridTextColumn Header="RPM" Binding="{Binding RPM}" />
+                            <DataGridTextColumn Header="Speed" Binding="{Binding Speed}" />
+                            <DataGridTextColumn Header="Odometer" Binding="{Binding Odometer}" />
+                            <DataGridTextColumn Header="TripDistance" Binding="{Binding TripDistance}" />
+                            <DataGridTextColumn Header="Latitude" Binding="{Binding Latitude}" />
+                            <DataGridTextColumn Header="Longtitude" Binding="{Binding Longtitude}" />
+                            <DataGridTextColumn Header="CreatedOn" Binding="{Binding CreatedOn}" />
+                            <DataGridTextColumn Header="IsProcessed" Binding="{Binding IsProcessed}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <TabItem x:Name="ELDEventsServerTab" Header="ELD Events Server Data">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock FontWeight="Bold" Text="{Binding ElementName=ELDEventsServerDG, Path=ItemsSource.Count, StringFormat='Total Records: {0}'}"
+                            Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"/>
+
+                    <DataGrid x:Name="ELDEventsServerDG" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                            Grid.Row="1" ColumnWidth="*"  IsSynchronizedWithCurrentItem="True" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Databse Id" Binding="{Binding Id}" />
+                            <DataGridTextColumn Header="Unique Id" Binding="{Binding Unique_Id}" />
+                            <DataGridTextColumn Header="Enginestate" Binding="{Binding Enginestate}" />
+                            <DataGridTextColumn Header="VIN" Binding="{Binding VIN}" />
+                            <DataGridTextColumn Header="RPM" Binding="{Binding RPM}" />
+                            <DataGridTextColumn Header="Speed" Binding="{Binding Speed}" />
+                            <DataGridTextColumn Header="Odometer" Binding="{Binding Odometer}" />
+                            <DataGridTextColumn Header="TripDistance" Binding="{Binding TripDistance}" />
+                            <DataGridTextColumn Header="Latitude" Binding="{Binding Latitude}" />
+                            <DataGridTextColumn Header="Longtitude" Binding="{Binding Longtitude}" />
+                            <DataGridTextColumn Header="CreatedOn" Binding="{Binding CreatedOn}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        
+        </TabControl>
+    
+    </Grid>
+</Window>
